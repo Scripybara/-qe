@@ -1,148 +1,123 @@
---// Swift UI Library
---// Converted from UIBYMINH
---// By Minh
+--====================================================
+-- G2L UI (NGUYÊN BẢN – KHÔNG SỬA)
+--====================================================
+local G2L = {}
 
-local TweenService = game:GetService("TweenService")
-local Players = game:GetService("Players")
-local Player = Players.LocalPlayer
+-- ScreenGui
+G2L["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"))
+G2L["1"].Name = "UIBYMINH"
+G2L["1"].ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
---==================================================
--- THEME
---==================================================
-local Theme = {
-    Background = Color3.fromRGB(40, 40, 45),
-    Topbar     = Color3.fromRGB(60, 60, 65),
-    Accent     = Color3.fromRGB(111, 208, 187),
-    Accent2    = Color3.fromRGB(115, 137, 106),
-    Text       = Color3.fromRGB(230,230,230),
-    Stroke     = Color3.fromRGB(243,246,255),
-    CloseRed1  = Color3.fromRGB(255,77,77),
-    CloseRed2  = Color3.fromRGB(255,145,145)
+-- Main
+G2L["2"] = Instance.new("Frame", G2L["1"])
+G2L["2"].Name = "Main"
+G2L["2"].Size = UDim2.new(0,553,0,320)
+G2L["2"].Position = UDim2.new(0.215,0,0.22,0)
+G2L["2"].BorderSizePixel = 0
+
+Instance.new("UICorner", G2L["2"]).CornerRadius = UDim.new(0,15)
+Instance.new("UIGradient", G2L["2"]).Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(26,26,26)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(130,131,144))
 }
 
---==================================================
--- CREATE UI BASE (YOUR UI)
---==================================================
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "SwiftUILibrary"
-ScreenGui.Parent = Player:WaitForChild("PlayerGui")
+-- Topbar
+G2L["5"] = Instance.new("Frame", G2L["2"])
+G2L["5"].Name = "topbar"
+G2L["5"].Size = UDim2.new(0,513,0,34)
+G2L["5"].Position = UDim2.new(0.036,0,0.034,0)
+G2L["5"].BorderSizePixel = 0
+Instance.new("UICorner", G2L["5"]).CornerRadius = UDim.new(0,15)
 
-local Main = Instance.new("Frame", ScreenGui)
-Main.Size = UDim2.fromOffset(553,320)
-Main.Position = UDim2.fromScale(0.25,0.25)
-Main.BackgroundColor3 = Theme.Background
-Main.BorderSizePixel = 0
+-- Title
+G2L["7"] = Instance.new("TextLabel", G2L["5"])
+G2L["7"].Text = "Swift UI"
+G2L["7"].BackgroundTransparency = 1
+G2L["7"].FontFace = Font.new("rbxasset://fonts/families/PressStart2P.json")
+G2L["7"].TextSize = 18
+G2L["7"].Size = UDim2.new(0,186,0,32)
 
-Instance.new("UICorner", Main).CornerRadius = UDim.new(0,15)
+-- Close
+G2L["8"] = Instance.new("TextButton", G2L["5"])
+G2L["8"].Name = "close"
+G2L["8"].Text = "X"
+G2L["8"].Size = UDim2.new(0,42,0,21)
+G2L["8"].Position = UDim2.new(0.895,0,0.176,0)
+G2L["8"].BorderSizePixel = 0
+Instance.new("UICorner", G2L["8"])
 
-local Topbar = Instance.new("Frame", Main)
-Topbar.Size = UDim2.new(1,-40,0,36)
-Topbar.Position = UDim2.new(0,20,0,12)
-Topbar.BackgroundColor3 = Theme.Topbar
-Topbar.BorderSizePixel = 0
-Instance.new("UICorner", Topbar).CornerRadius = UDim.new(0,15)
+-- Tab buttons
+G2L["c"] = Instance.new("Frame", G2L["2"])
+G2L["c"].Name = "TabButtons"
+G2L["c"].Size = UDim2.new(0,155,0,249)
+G2L["c"].Position = UDim2.new(0.036,0,0.196,0)
+G2L["c"].BorderSizePixel = 0
+Instance.new("UICorner", G2L["c"]).CornerRadius = UDim.new(0,10)
 
-local Title = Instance.new("TextLabel", Topbar)
-Title.Size = UDim2.new(1,-80,1,0)
-Title.BackgroundTransparency = 1
-Title.Text = "Swift UI"
-Title.Font = Enum.Font.GothamBold
-Title.TextSize = 18
-Title.TextColor3 = Theme.Text
+-- Tab Scroll
+G2L["e"] = Instance.new("ScrollingFrame", G2L["c"])
+G2L["e"].Name = "tabscroll"
+G2L["e"].Size = UDim2.new(1,0,1,0)
+G2L["e"].AutomaticCanvasSize = Enum.AutomaticSize.Y
+G2L["e"].CanvasSize = UDim2.new()
+G2L["e"].ScrollBarThickness = 5
+G2L["e"].BackgroundTransparency = 1
 
-local Close = Instance.new("TextButton", Topbar)
-Close.Size = UDim2.fromOffset(42,22)
-Close.Position = UDim2.new(1,-50,0.5,-11)
-Close.Text = "X"
-Close.TextColor3 = Color3.new(0,0,0)
-Close.BackgroundColor3 = Theme.CloseRed1
-Close.BorderSizePixel = 0
-Instance.new("UICorner", Close)
+local tabLayout = Instance.new("UIListLayout", G2L["e"])
+tabLayout.Padding = UDim.new(0,10)
 
--- Gradient close
-local cg = Instance.new("UIGradient", Close)
-cg.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0,Theme.CloseRed1),
-    ColorSequenceKeypoint.new(1,Theme.CloseRed2)
-}
+--====================================================
+-- CONTENT HOLDER (GIỮ STYLE)
+--====================================================
+local Pages = Instance.new("Frame", G2L["2"])
+Pages.Name = "Pages"
+Pages.Size = UDim2.new(0,360,0,249)
+Pages.Position = UDim2.new(0.33,0,0.196,0)
+Pages.BackgroundTransparency = 1
 
---==================================================
--- DRAG SYSTEM (IMPORTANT)
---==================================================
+--====================================================
+-- DRAG UI (KHÔNG ẢNH HƯỞNG MÀU)
+--====================================================
 do
-    local dragging, dragStart, startPos
-    Topbar.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = true
-            dragStart = input.Position
-            startPos = Main.Position
+    local UIS = game:GetService("UserInputService")
+    local drag, startPos, dragStart
+
+    G2L["5"].InputBegan:Connect(function(i)
+        if i.UserInputType == Enum.UserInputType.MouseButton1 then
+            drag = true
+            dragStart = i.Position
+            startPos = G2L["2"].Position
         end
     end)
 
-    Topbar.InputEnded:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = false
-        end
-    end)
-
-    game:GetService("UserInputService").InputChanged:Connect(function(input)
-        if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-            local delta = input.Position - dragStart
-            Main.Position = UDim2.new(
-                startPos.X.Scale,
-                startPos.X.Offset + delta.X,
-                startPos.Y.Scale,
-                startPos.Y.Offset + delta.Y
+    UIS.InputChanged:Connect(function(i)
+        if drag and i.UserInputType == Enum.UserInputType.MouseMovement then
+            local delta = i.Position - dragStart
+            G2L["2"].Position = UDim2.new(
+                startPos.X.Scale, startPos.X.Offset + delta.X,
+                startPos.Y.Scale, startPos.Y.Offset + delta.Y
             )
+        end
+    end)
+
+    UIS.InputEnded:Connect(function(i)
+        if i.UserInputType == Enum.UserInputType.MouseButton1 then
+            drag = false
         end
     end)
 end
 
---==================================================
--- TAB SYSTEM
---==================================================
-local TabHolder = Instance.new("Frame", Main)
-TabHolder.Size = UDim2.fromOffset(155,249)
-TabHolder.Position = UDim2.new(0,20,0,60)
-TabHolder.BackgroundColor3 = Theme.Background
-TabHolder.BorderSizePixel = 0
-Instance.new("UICorner", TabHolder).CornerRadius = UDim.new(0,10)
-
-local TabScroll = Instance.new("ScrollingFrame", TabHolder)
-TabScroll.Size = UDim2.new(1,0,1,0)
-TabScroll.CanvasSize = UDim2.new(0,0,0,0)
-TabScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
-TabScroll.ScrollBarThickness = 4
-TabScroll.BackgroundTransparency = 1
-
-Instance.new("UIListLayout", TabScroll).Padding = UDim.new(0,10)
-
-local Pages = Instance.new("Frame", Main)
-Pages.Size = UDim2.new(1,-200,1,-80)
-Pages.Position = UDim2.new(0,185,0,60)
-Pages.BackgroundTransparency = 1
-
---==================================================
--- LIBRARY API
---==================================================
+--====================================================
+-- UI LIBRARY API (KHÔNG ĐỔI UI)
+--====================================================
 local Library = {}
 
 function Library:CreateTab(name)
-    local TabButton = Instance.new("TextButton", TabScroll)
-    TabButton.Size = UDim2.fromOffset(145,32)
-    TabButton.Text = name
-    TabButton.Font = Enum.Font.GothamBold
-    TabButton.TextSize = 14
-    TabButton.TextColor3 = Color3.new(0,0,0)
-    TabButton.BackgroundColor3 = Theme.Accent
-    TabButton.BorderSizePixel = 0
-    Instance.new("UICorner", TabButton).CornerRadius = UDim.new(0,10)
-
-    local grad = Instance.new("UIGradient", TabButton)
-    grad.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0,Theme.Accent),
-        ColorSequenceKeypoint.new(1,Theme.Accent2)
-    }
+    local TabBtn = Instance.new("TextButton", G2L["e"])
+    TabBtn.Text = name
+    TabBtn.Size = UDim2.new(0,149,0,31)
+    TabBtn.BorderSizePixel = 0
+    Instance.new("UICorner", TabBtn).CornerRadius = UDim.new(0,10)
 
     local Page = Instance.new("Frame", Pages)
     Page.Size = UDim2.new(1,0,1,0)
@@ -152,7 +127,7 @@ function Library:CreateTab(name)
     local layout = Instance.new("UIListLayout", Page)
     layout.Padding = UDim.new(0,10)
 
-    TabButton.MouseButton1Click:Connect(function()
+    TabBtn.MouseButton1Click:Connect(function()
         for _,v in pairs(Pages:GetChildren()) do
             if v:IsA("Frame") then v.Visible = false end
         end
@@ -161,31 +136,21 @@ function Library:CreateTab(name)
 
     return {
         Button = function(text, callback)
-            local B = Instance.new("TextButton", Page)
-            B.Size = UDim2.new(1,0,0,36)
-            B.Text = text
-            B.Font = Enum.Font.Gotham
-            B.TextSize = 14
-            B.TextColor3 = Theme.Text
-            B.BackgroundColor3 = Theme.Topbar
-            B.BorderSizePixel = 0
-            Instance.new("UICorner", B)
+            local btn = Instance.new("TextButton", Page)
+            btn.Text = text
+            btn.Size = UDim2.new(1,0,0,36)
+            btn.BorderSizePixel = 0
+            Instance.new("UICorner", btn)
 
-            B.MouseButton1Click:Connect(function()
+            btn.MouseButton1Click:Connect(function()
                 pcall(callback)
             end)
         end
     }
 end
 
---==================================================
--- CLOSE
---==================================================
-Close.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
+G2L["8"].MouseButton1Click:Connect(function()
+    G2L["1"]:Destroy()
 end)
 
---==================================================
--- RETURN LIBRARY
---==================================================
 return Library
